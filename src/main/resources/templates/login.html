@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CollabCode</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <!-- Fontawesome icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/login.css">
+    <script src="js/login.js"></script>
+</head>
+
+<body>
+<div class="container-fluid h-100">
+    <div class="row h-100 align-items-center">
+        <div class="col-3 offset-3 p-4">
+            <img class="w-100" src="image/image_personcodingfacingright.png"/>
+        </div>
+        <div class="col-3 text-center p-4">
+            <h3 class="text-secondary">CollabCode</h3>
+            <form th:action="@{/login}" method="post" class="w-100 mt-4">
+                <div class="form-group input-group">
+                    <input type="email" class="form-control border-right-0" placeholder="Email" id="email" name="email" required>
+                    <span class="input-group-append bg-white border-left-0">
+                        <span class="input-group-text bg-transparent">
+                            <i class="fas fa-envelope"></i>
+                        </span>
+                    </span>
+                </div>
+                <div class="form-group input-group">
+                    <input type="password" class="form-control border-right-0" placeholder="Password" id="password" name="password" required>
+                    <span class="input-group-append bg-white border-left-0">
+                        <span class="input-group-text bg-transparent">
+                            <i class="fas fa-unlock"></i>
+                        </span>
+                    </span>
+                </div>
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary btn-block">Log In</button>
+                </div>
+            </form>
+            <a href="#">Forgot password?</a>
+            <div class="row mt-2">
+                <div class="col"><hr></div>
+                <div class="col-auto text-secondary"><small>OR</small></div>
+                <div class="col"><hr></div>
+            </div>
+            <div>
+                <div class="text-secondary d-inline">Don't have an account?</div>
+                <a href="/signup">Sign Up.</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
