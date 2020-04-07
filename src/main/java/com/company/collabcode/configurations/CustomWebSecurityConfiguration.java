@@ -36,7 +36,7 @@ public class CustomWebSecurityConfiguration extends WebSecurityConfigurerAdapter
 
         http.formLogin()
                 .loginPage("/login")
-                .usernameParameter("email")
+                .usernameParameter("email_address")
                 .passwordParameter("password")
                 .defaultSuccessUrl("/dashboard");
     }

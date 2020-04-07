@@ -4,42 +4,51 @@ import com.company.collabcode.database.UserRepository;
 import com.company.collabcode.models.User;
 import com.company.collabcode.utils.AuthenticationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class AuthenticationController {
+    @Autowired
+    private UserRepository userRepository;
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @GetMapping("/login")
     private String showLoginPage() {
         // If user is already logged in, redirect to dashboard
         if(AuthenticationHelper.isUserLoggedIn())
             return "redirect:/dashboard";
         return "login";
     }
-/*
-    @RequestMapping(value = "/signup", method= RequestMethod.GET)
-    @ResponseBody
+
+    @GetMapping("/signup")
     private String showSignUpPage() {
         if(AuthenticationHelper.isUserLoggedIn())
             return "redirect:/dashboard";
-        return "sign-up";
+        return "signup";
     }
 
-    @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    @ResponseBody
-    private String signUpNewUser() {
+    @PostMapping("/signup")
+    private String signUpNewUser(HttpServletRequest httpServletRequest) {
         // Sign up here...
-        System.out.println("Signing up new user...");
+        // System.out.println("Signing up new user...");
         // Redirect to log in page if successful else show error message on this page
-        return "log-in";
+        String emailAddress = httpServletRequest.getParameter("email_address");
+        String password = httpServletRequest.getParameter("password");
+        String firstName = httpServletRequest.getParameter("first_name");
+        String lastName = httpServletRequest.getParameter("last_name");
+
+        // handle this better
+        if(userRepository.findByEmailAddress(emailAddress) != null)
+            return "signup";
+
+        User user = new User(emailAddress, password, firstName, lastName);
+        userRepository.save(user);
+
+        return "login";
     }
-    */
 }
