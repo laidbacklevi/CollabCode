@@ -30,7 +30,9 @@ public class CustomWebSecurityConfiguration extends WebSecurityConfigurerAdapter
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/login-error").permitAll()
                 .antMatchers("/signup").permitAll()
+                .antMatchers("/signup-error").permitAll()
                 .antMatchers("/css/**", "/js/**", "/image/**").permitAll()
                 .antMatchers("/**").authenticated();
 
@@ -38,7 +40,8 @@ public class CustomWebSecurityConfiguration extends WebSecurityConfigurerAdapter
                 .loginPage("/login")
                 .usernameParameter("email_address")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/dashboard");
+                .defaultSuccessUrl("/dashboard")
+                .failureUrl("/login-error");
     }
 
     @Bean
