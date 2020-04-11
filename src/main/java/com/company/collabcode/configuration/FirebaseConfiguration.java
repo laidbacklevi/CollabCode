@@ -17,7 +17,7 @@ public class FirebaseConfiguration {
     private final String FIREBASE_DATABASE_URL = "https://collabcode-4bce8.firebaseio.com";
 
     private void init() throws Exception{
-        File serviceAccountFile = ResourceUtils.getFile( "classpath:/config/collabcode-4bce8-firebase-adminsdk-p9q47-cfd49970e7.json");
+        File serviceAccountFile = ResourceUtils.getFile( "classpath:config/collabcode-4bce8-firebase-adminsdk-p9q47-cfd49970e7.json");
 
         FileInputStream serviceAccount =
                 new FileInputStream(serviceAccountFile);

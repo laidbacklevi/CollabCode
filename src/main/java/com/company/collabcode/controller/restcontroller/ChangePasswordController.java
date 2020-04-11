@@ -9,6 +9,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
 @RestController
@@ -25,9 +26,12 @@ public class ChangePasswordController {
 
     @PostMapping("/change-password")
     private String changePassword(@AuthenticationPrincipal CustomUserDetails customUserDetails,
-                                  @RequestParam("old_password") String oldPassword,
-                                  @RequestParam("new_password") String newPassword) {
+                                  HttpServletRequest httpServletRequest) {
         User currUser = customUserDetails.getUser();
+
+        String oldPassword = httpServletRequest.getParameter("old_password");
+        String newPassword = httpServletRequest.getParameter("new_password");
+
         ObjectMapper objectMapper = new ObjectMapper();
         HashMap<String, String> result = new HashMap<>();
 

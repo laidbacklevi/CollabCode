@@ -1,7 +1,8 @@
 package com.company.collabcode.database;
 
-/*
-public interface SessionRepository extends JPARepository<Session, > {
+import com.company.collabcode.model.Session;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface SessionRepository extends JpaRepository<Session, Long> {
 
 }
-*/
