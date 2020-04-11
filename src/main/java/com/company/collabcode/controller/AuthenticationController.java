@@ -57,7 +57,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
-    private String signUpNewUser(HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
+    private String signUpNewUser(HttpServletRequest httpServletRequest,
+                                 RedirectAttributes redirectAttributes) {
+
         String emailAddress = httpServletRequest.getParameter("email_address");
         String password = passwordEncoder.encode(httpServletRequest.getParameter("password"));
         String firstName = httpServletRequest.getParameter("first_name");

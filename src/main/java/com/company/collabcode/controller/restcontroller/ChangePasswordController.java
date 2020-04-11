@@ -38,7 +38,7 @@ public class ChangePasswordController {
         // Change password if old password matches
         if(passwordEncoder.matches(oldPassword, currUser.getPassword())) {
             currUser.setPassword(passwordEncoder.encode(newPassword));
-            userRepository.save(currUser);
+            currUser = userRepository.save(currUser);
             result.put("message", "success");
         } else {
             result.put("message", "failure");

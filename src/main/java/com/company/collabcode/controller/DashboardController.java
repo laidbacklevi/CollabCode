@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DashboardController {
 
     @GetMapping
-    private String showDashboardPage(@AuthenticationPrincipal CustomUserDetails customUserDetails, Model model) {
+    private String showDashboardPage(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                     Model model) {
+
         User currUser = customUserDetails.getUser();
         model.addAttribute("first_name", currUser.getFirstName());
         return "dashboard";
