@@ -1,10 +1,160 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
+
+    <title>CollabCode</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <!-- Fontawesome icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="js/dashboard.js"></script>
 </head>
-<body>
+<body class="bg-light">
+
+<nav class="navbar navbar-expand-sm fixed-top navbar-light bg-light py-3">
+    <div class="container">
+        <a class="navbar-brand font-weight-bold" href="#">CollabCode</a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown mr-4">
+                    <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdownNotifications" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="badge badge-pill badge-primary align-middle mr-1 pt-1 pb-2 pl-3 pr-3 mb-1">new</span>
+                        <i class="fas fa-envelope mr-1"></i>
+                        Invites
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownNotifications">
+                        <a class="dropdown-item" href="#">
+                            Notification 1
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">
+                                Notification 2
+                            </a>
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-user mr-1"></i>
+                        <div class="d-inline" th:text="${first_name}"></div>
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#change_password_modal">
+                            Change password
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <div>
+                            <form th:action="@{/logout}" method="POST">
+                                <button class="btn btn-outline-dark" type="submit">Logout</button>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
+<div class="container-fluid h-100 pt-5">
+    <div class="row h-100 align-items-center">
+        <div class="col-5 offset-1 text-center">
+            <img class="w-100" src="image/image_peoplecoding.png"/></div>
+        <div class="col-5">
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="card text-center shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">Create a new session</h5>
+                            <p class="card-text text-secondary">Create a new session where you can collaboratively code with other users.</p>
+                            <a href="/session/new" class="btn btn-dark w-50">Create</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <div class="card text-center shadow mt-5">
+                        <div class="card-body">
+                            <h5 class="card-title">View old sessions</h5>
+                            <p class="card-text text-secondary">View old sessions to continue them or to use their corresponding code.</p>
+                            <a href="#" class="btn btn-dark w-50">View</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Change password section -->
+<div class="modal fade" id="change_password_modal" tabindex="-1" role="dialog" aria-labelledby="change_password_title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="change_password_title">Change password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row h-100 align-items-center">
+                        <div class="col-3 offset-1 text-center">
+                            <img class="w-100" src="image/image_securityguard.png"/></div>
+                        <div class="col-7 ml-0 pl-0">
+                            <div class="form-group input-group shadow-sm">
+                                <input id="old_password" type="password" class="form-control" placeholder="Enter old password" required>
+                            </div>
+                            <div class="form-group input-group shadow-sm">
+                                <input id="new_password" type="password" class="form-control" placeholder="Enter new password" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="change_password" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Wrong password -->
+<div class="modal fade" id="incorrect_password_modal" tabindex="-1" role="dialog" aria-labelledby="incorrect_password_title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="incorrect_password_title">Incorrect password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                The password you entered is incorrect.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

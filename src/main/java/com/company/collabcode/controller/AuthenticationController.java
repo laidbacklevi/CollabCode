@@ -1,11 +1,10 @@
-package com.company.collabcode.controllers;
+package com.company.collabcode.controller;
 
 import com.company.collabcode.database.UserRepository;
-import com.company.collabcode.models.User;
+import com.company.collabcode.model.User;
 import com.company.collabcode.utils.AuthenticationHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRequest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,8 +14,15 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class AuthenticationController {
-    @Autowired
-    private UserRepository userRepository;
+
+    private final PasswordEncoder passwordEncoder;
+
+    private final UserRepository userRepository;
+
+    public AuthenticationController(final PasswordEncoder passwordEncoder, final UserRepository userRepository) {
+        this.passwordEncoder = passwordEncoder;
+        this.userRepository = userRepository;
+    }
 
     @GetMapping("/login")
     private String showLoginPage() {
@@ -52,11 +58,8 @@ public class AuthenticationController {
 
     @PostMapping("/signup")
     private String signUpNewUser(HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes) {
-        // Sign up here...
-        // System.out.println("Signing up new user...");
-        // Redirect to log in page if successful else show error message on this page
         String emailAddress = httpServletRequest.getParameter("email_address");
-        String password = httpServletRequest.getParameter("password");
+        String password = passwordEncoder.encode(httpServletRequest.getParameter("password"));
         String firstName = httpServletRequest.getParameter("first_name");
         String lastName = httpServletRequest.getParameter("last_name");
 

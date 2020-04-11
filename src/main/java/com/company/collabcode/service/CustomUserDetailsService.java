@@ -1,8 +1,8 @@
-package com.company.collabcode.services;
+package com.company.collabcode.service;
 
 import com.company.collabcode.database.UserRepository;
-import com.company.collabcode.models.CustomUserDetails;
-import com.company.collabcode.models.User;
+import com.company.collabcode.model.CustomUserDetails;
+import com.company.collabcode.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,9 +21,8 @@ public class CustomUserDetailsService implements UserDetailsService {
         // handle if user not found too...
         User user = userRepository.findByEmailAddress(emailAddress);
         if(user == null)
-            throw new UsernameNotFoundException("Put message here");
-        UserDetails userDetails = new CustomUserDetails(user);
-        return userDetails;
+            throw new UsernameNotFoundException("User not found!!!");
+        return new CustomUserDetails(user);
     }
 
 }

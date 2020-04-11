@@ -1,9 +1,7 @@
-package com.company.collabcode.models;
+package com.company.collabcode.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.Collection;
 
@@ -12,6 +10,14 @@ public class CustomUserDetails implements UserDetails {
     private User user;
 
     public CustomUserDetails(User user) {
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
         this.user = user;
     }
 

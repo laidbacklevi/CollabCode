@@ -291,7 +291,7 @@ CodeMirror.defineMode("perl",function(){
                 endnetent                       :1,     // - be done using networks file
                 endprotoent                     :1,     // - be done using protocols file
                 endpwent                        :1,     // - be done using passwd file
-                endservent                      :1,     // - be done using services file
+                endservent                      :1,     // - be done using service file
                 eof                             :1,     // - test a filehandle for its end
                 'eval'                          :1,     // - catch exceptions or compile and run code
                 'exec'                          :1,     // - abandon this program to run another
@@ -325,9 +325,9 @@ CodeMirror.defineMode("perl",function(){
                 getpwent                        :1,     // - get next passwd record
                 getpwnam                        :1,     // - get passwd record given user login name
                 getpwuid                        :1,     // - get passwd record given user ID
-                getservbyname                   :1,     // - get services record given its name
-                getservbyport                   :1,     // - get services record given numeric port
-                getservent                      :1,     // - get next services record
+                getservbyname                   :1,     // - get service record given its name
+                getservbyport                   :1,     // - get service record given numeric port
+                getservent                      :1,     // - get next service record
                 getsockname                     :1,     // - retrieve the sockaddr for a given socket
                 getsockopt                      :1,     // - get socket options on a given socket
                 given                           :1,     //
@@ -419,7 +419,7 @@ CodeMirror.defineMode("perl",function(){
                 setpriority                     :1,     // - set a process's nice value
                 setprotoent                     :1,     // - prepare protocols file for use
                 setpwent                        :1,     // - prepare passwd file for use
-                setservent                      :1,     // - prepare services file for use
+                setservent                      :1,     // - prepare service file for use
                 setsockopt                      :1,     // - set some socket options
                 shift                           :1,     // - remove the first element of an array, and return it
                 shmctl                          :1,     // - SysV shared memory operations

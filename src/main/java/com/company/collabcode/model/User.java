@@ -1,22 +1,14 @@
-package com.company.collabcode.models;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+package com.company.collabcode.model;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.UUID;
 
 
 @Entity(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id", nullable = false, updatable = false)
-    private long userId;
+    @Column(name = "id", nullable = false, updatable = false)
+    private long id;
 
     @Column(name = "email_address", nullable = false, unique = true)
     private String emailAddress;
@@ -40,12 +32,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public long getUserId() {
-        return userId;
+    public long getId() {
+        return id;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getEmailAddress() {
