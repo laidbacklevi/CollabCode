@@ -10,10 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,7 +30,7 @@ public class SessionController {
         this.databaseReference = databaseReference;
     }
 
-    @GetMapping("/new")
+    @PostMapping("/new")
     private String createNewSession(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
             HttpServletRequest httpServletRequest) {
@@ -53,7 +51,8 @@ public class SessionController {
     @ResponseBody
     private String showParticularSession(@PathVariable("session-id") long sessionId,
                                          @AuthenticationPrincipal CustomUserDetails customUserDetails,
-                                         HttpServletRequest httpServletRequest) {
+                                         HttpServletRequest httpServletRequest,
+                                         Model model) {
 
         User currUser = customUserDetails.getUser();
 
@@ -63,12 +62,10 @@ public class SessionController {
         }
         Session requestedSession = optionalSession.get();
 
-        // shoe session page
+        // show session page
         // Check if actually the author and render page differently
 
-
-        return requestedSession.getId() + " " + requestedSession.getCreatorId();
-        //return "redirect:/session/" + createdSession.getId();
+        return "session";
     }
 
 }

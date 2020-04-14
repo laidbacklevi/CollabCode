@@ -40,10 +40,11 @@
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownNotifications">
                         <a class="dropdown-item" href="#">
                             Notification 1
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">
-                                Notification 2
-                            </a>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">
+                            Notification 2
+                        </a>
                     </div>
                 </li>
 
@@ -82,7 +83,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Create a new session</h5>
                             <p class="card-text text-secondary">Create a new session where you can collaboratively code with other users.</p>
-                            <a href="/session/new" class="btn btn-dark w-50">Create</a>
+                            <a href="#" data-toggle="modal" data-target="#new_session_modal" class="btn btn-dark w-50">Create</a>
                         </div>
                     </div>
                 </div>
@@ -151,6 +152,38 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- New session -->
+<div class="modal fade" id="new_session_modal" tabindex="-1" role="dialog" aria-labelledby="new_session_title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="new_session_title">Create new session</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="new_session_form" action="/session/new" method="post">
+                    <div class="container">
+                        <div class="form-group row">
+                            <label for="session_name" class="col-5">
+                                Enter session name:
+                            </label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" id="session_name" name="session_name" required>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button id="create_new_session" type="submit" form="new_session_form" class="btn btn-primary">Create</button>
             </div>
         </div>
     </div>
