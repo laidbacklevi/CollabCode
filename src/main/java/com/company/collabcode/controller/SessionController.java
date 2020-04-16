@@ -72,6 +72,8 @@ public class SessionController {
         // show session page
         // Check if actually the author and render page differently
         model.addAttribute("session_id", requestedSession.getId());
+        model.addAttribute("firebase_database_id", requestedSession.getFirebaseDatabaseId());
+
         return "session";
     }
 

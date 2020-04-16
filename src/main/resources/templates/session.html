@@ -29,10 +29,20 @@
     <script src="/plugin/codemirror/addon/selection/active-line.js"></script>
     <!-- END Codemirror -->
 
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase.js"></script>
+
+    <!-- Firepad -->
+    <link rel="stylesheet" href="https://firepad.io/releases/v1.5.10/firepad.css" />
+    <script src="https://firepad.io/releases/v1.5.10/firepad.min.js"></script>
+
 
     <link rel="stylesheet" href="/css/session.css">
     <!-- To use thymeleaf variable -->
-    <script>var session_id = "[[${session_id}]]";</script>
+    <script>
+        var session_id = "[[${session_id}]]";
+        var firebase_database_id = "[[${firebase_database_id}]]";
+    </script>
     <script src="/js/session.js"></script>
 </head>
 

@@ -1,5 +1,14 @@
 $("document").ready(function () {
 
+    // Firebase config
+    var config = {
+        apiKey: 'AIzaSyD0dtv3yXPmrVOypXCqRtw3vPh7pK8-oH4',
+        authDomain: "collabcode-4bce8.firebaseapp.com",
+        databaseURL: "https://collabcode-4bce8.firebaseio.com"
+    };
+    firebase.initializeApp(config);
+
+
     // Editor
     var codemirrorEditor = CodeMirror.fromTextArea(document.getElementById("editor"), {
         mode: "text/x-java",
@@ -10,6 +19,9 @@ $("document").ready(function () {
 
     // hack
     codemirrorEditor.setSize(null, "calc(100% - 49px)");
+
+    var firepadRef = firebase.database().ref().child(firebase_database_id);
+    var firepad = Firepad.fromCodeMirror(firepadRef, codemirrorEditor, {});
 
     // Output
     var codemirrorOutput = CodeMirror.fromTextArea(document.getElementById("output"), {
