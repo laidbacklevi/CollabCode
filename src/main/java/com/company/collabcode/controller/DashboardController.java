@@ -9,10 +9,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/dashboard")
 public class DashboardController {
-
-    @GetMapping
+    @GetMapping("/dashboard")
     private String showDashboardPage(@AuthenticationPrincipal CustomUserDetails customUserDetails,
                                      Model model) {
 
@@ -20,5 +18,4 @@ public class DashboardController {
         model.addAttribute("first_name", currUser.getFirstName());
         return "dashboard";
     }
-
 }

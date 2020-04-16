@@ -36,7 +36,7 @@ public class CustomWebSecurityConfiguration extends WebSecurityConfigurerAdapter
                 .antMatchers("/login-error").permitAll()
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/signup-error").permitAll()
-                .antMatchers("/css/**", "/js/**", "/image/**").permitAll()
+                .antMatchers("/css/**", "/js/**", "/image/**", "/plugin/**").permitAll()
                 .antMatchers("/**").authenticated();
 
         http.formLogin()
