@@ -68,4 +68,34 @@ $("document").ready(function () {
 
     $("#run").click(function() { compileAndRun(); });
 
+    $("#add_collaborator").click(function () {
+        addCollaborator($("#collaborator_email_address").val());
+    });
+
+    function addCollaborator(emailAddress) {
+        $("#add_collaborator").attr("disabled", true);
+        $.ajax({
+            url: '/session/' + session_id + '/add-collaborator',
+            type: "POST",
+            data: {
+                email_address: emailAddress
+            },
+            dataType: 'JSON',
+            success: function(response){
+                $('#add_collaborator_modal').modal('hide');
+                $("#collaborator_email_address").val("");
+                $("#add_collaborator").removeAttr("disabled");
+
+                if(response.message === "failure") {
+                    // Incorrect password entered
+                    $('#invalid_email_modal').modal('show');
+                }
+            },
+            error: function (xhr, status, error) {
+                // Error occured do something
+                alert("Error occurred. Please try again.");
+                $("#add_collaborator").removeAttr("disabled");
+            }
+        });
+    }
 });

@@ -1,13 +1,11 @@
 $("document").ready(function () {
     $("#change_password").click(function () {
-        // Disable button
-        $("#change_password").attr("disabled", true);
-        // Send request
         requestPasswordChange($("#old_password").val(), $("#new_password").val());
     });
 });
 
 function requestPasswordChange(old_password, new_password) {
+    $("#change_password").attr("disabled", true);
     $.ajax({
         url: '/change-password',
         type: "POST",

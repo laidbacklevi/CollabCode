@@ -6,7 +6,7 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"/>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
@@ -48,23 +48,29 @@
 
 <body>
     <nav id="bottomBar" class="navbar fixed-bottom navbar-expand-sm navbar-light">
+
+        <button class="btn btn-sm btn-outline-dark ml-auto" data-toggle="modal" data-target="#add_collaborator_modal">
+            <i class="fas fa-user-plus pr-1"></i>
+            Add collaborator
+        </button>
+
     </nav>
     <div class="container-fluid" style="height: calc(100% - 54px);">
         <div class="row h-100">
             <div class="col-8 h-100">
                 <div class="row py-2">
-                    <div class="col-6">
-                        Document Name
+                    <div class="col-7">
+                        <div class="ml-3 font-weight-bold text-muted" th:text="${session_name}"></div>
                     </div>
                     <div class="col-4">
-                        <select id="language" class="form-control form-control-sm float-right w-75">
+                        <select id="language" class="form-control form-control-sm w-75 float-right">
                             <option selected value="java">Java</option>
                             <option value="c++">C++</option>
                             <option value="c">C</option>
                         </select>
                     </div>
-                    <div class="col-2">
-                        <button id="run" class="btn btn-sm btn-success pl-4 pr-4 float-right">Run</button>
+                    <div class="col-1 pl-0">
+                        <button id="run" class="btn btn-sm btn-success ml-auto w-100">Run</button>
                     </div>
                 </div>
                 <!-- CODEMIRROR EDITOR-->
@@ -111,5 +117,57 @@
             </div>
         </div>
     </div>
+
+    <!-- Add collaborator -->
+    <div class="modal fade" id="add_collaborator_modal" tabindex="-1" role="dialog" aria-labelledby="add_collaborator_title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="add_collaborator_title">Add collaborator</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="row h-100 align-items-center">
+                            <div class="col-3 offset-1 text-center">
+                                <img class="w-100" src="/image/image_addcollaborator.png"/></div>
+                            <div class="col-7 ml-0 pl-0">
+                                <div class="form-group input-group shadow-sm">
+                                    <input id="collaborator_email_address" type="email" class="form-control" placeholder="Enter collaborator's email" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button id="add_collaborator" type="button" class="btn btn-primary">Add</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invalid Email -->
+    <div class="modal fade" id="invalid_email_modal" tabindex="-1" role="dialog" aria-labelledby="invalid_email_title" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="invalid_email_title">Invalid email</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    The email address you entered is invalid or is not registered in CollabCode.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
