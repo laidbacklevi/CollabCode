@@ -8,7 +8,6 @@ $("document").ready(function () {
     };
     firebase.initializeApp(config);
 
-
     // Editor
     var codemirrorEditor = CodeMirror.fromTextArea(document.getElementById("editor"), {
         mode: "text/x-java",
@@ -16,22 +15,46 @@ $("document").ready(function () {
         lineNumbers: true,
         styleActiveLine: true
     });
-
-    // hack
     codemirrorEditor.setSize(null, "calc(100% - 49px)");
+    var firepadCodeRef = firebase.database().ref().child(session_id).child("code");
+    var firepadCode = Firepad.fromCodeMirror(firepadCodeRef, codemirrorEditor, {});
 
-    var firepadRef = firebase.database().ref().child(firebase_database_id);
-    var firepad = Firepad.fromCodeMirror(firepadRef, codemirrorEditor, {});
+
+    // Input
+    var codemirrorInput = CodeMirror.fromTextArea(document.getElementById("input"));
+    codemirrorInput.setSize(null, "calc(100% - 42px)");
+    var firepadInputRef = firebase.database().ref().child(session_id).child("input");
+    var firepadInput = Firepad.fromCodeMirror(firepadInputRef, codemirrorInput, {});
+
+
+    // Language
+    var languageRef = firebase.database().ref().child(session_id).child("language");
+    languageRef.on('value', function (snapshot) {
+        if(snapshot.exists()) {
+            var language = snapshot.val();
+            // Change dropdown value as well as Codemirror mode
+            $("#language").val(language);
+            if(language.localeCompare("java")) {
+                codemirrorEditor.setOption("mode", "text/x-java");
+            } else if(language.localeCompare("cpp")) {
+                codemirrorEditor.setOption("mode", "text/x-c++src");
+            } else {
+                codemirrorEditor.setOption("mode", "text/x-csrc");
+            }
+        }
+    });
+
+    $('select').on('change', function() {
+        var language = this.value;
+        firebase.database().ref().child(session_id).child("language").set(language);
+    });
+
 
     // Output
     var codemirrorOutput = CodeMirror.fromTextArea(document.getElementById("output"), {
         readOnly: true
     });
     codemirrorOutput.setSize(null, "calc(100% - 47px)");
-
-    // Input
-    var codemirrorInput = CodeMirror.fromTextArea(document.getElementById("input"));
-    codemirrorInput.setSize(null, "calc(100% - 42px)");
 
 
     var socket = new SockJS("/session-endpoint");
@@ -46,6 +69,7 @@ $("document").ready(function () {
                 // Code ran successfully
                 if(outputContainer.output != null)
                     codemirrorOutput.replaceRange(outputContainer.output, {line: Infinity});
+                codemirrorOutput.setCursor(codemirrorOutput.lineCount(), 0);
             }
         );
     });
@@ -98,4 +122,8 @@ $("document").ready(function () {
             }
         });
     }
+
+    $("#clear").click(function() {
+        codemirrorOutput.setValue("");
+    });
 });

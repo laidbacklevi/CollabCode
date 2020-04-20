@@ -58,10 +58,10 @@ public class SessionController {
 
         // Create a new session and redirect to that session
         String name = httpServletRequest.getParameter("session_name");
-        String firebaseDatabaseId = databaseReference.push().getKey();
+
         long creatorId = currUser.getId();
 
-        Session createdSession = sessionRepository.save(new Session(name, firebaseDatabaseId, creatorId));
+        Session createdSession = sessionRepository.save(new Session(name, creatorId));
 
         return "redirect:/session/" + createdSession.getId();
     }
@@ -94,7 +94,6 @@ public class SessionController {
         }
 
         model.addAttribute("session_id", requestedSession.getId());
-        model.addAttribute("firebase_database_id", requestedSession.getFirebaseDatabaseId());
         model.addAttribute("session_name", requestedSession.getName());
 
         return "session";

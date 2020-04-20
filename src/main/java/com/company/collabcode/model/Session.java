@@ -12,18 +12,14 @@ public class Session {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "firebase_database_id", nullable = false)
-    private String firebaseDatabaseId;
-
     @Column(name = "creator_id", nullable = false)
     private long creatorId;
 
     public Session() {
     }
 
-    public Session(String name, String firebaseDatabaseId, long creatorId) {
+    public Session(String name, long creatorId) {
         this.name = name;
-        this.firebaseDatabaseId = firebaseDatabaseId;
         this.creatorId = creatorId;
     }
 
@@ -41,14 +37,6 @@ public class Session {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getFirebaseDatabaseId() {
-        return firebaseDatabaseId;
-    }
-
-    public void setFirebaseDatabaseId(String firebaseDatabaseId) {
-        this.firebaseDatabaseId = firebaseDatabaseId;
     }
 
     public long getCreatorId() {

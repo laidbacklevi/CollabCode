@@ -41,15 +41,15 @@
     <!-- To use thymeleaf variable -->
     <script>
         var session_id = "[[${session_id}]]";
-        var firebase_database_id = "[[${firebase_database_id}]]";
     </script>
     <script src="/js/session.js"></script>
 </head>
 
 <body>
     <nav id="bottomBar" class="navbar fixed-bottom navbar-expand-sm navbar-light">
+        <div class="text-muted font-weight-bold">Online collaborators:</div>
 
-        <button class="btn btn-sm btn-outline-dark ml-auto" data-toggle="modal" data-target="#add_collaborator_modal">
+        <button th:disabled="${is_creator == null}" class="btn btn-sm btn-outline-dark ml-auto" data-toggle="modal" data-target="#add_collaborator_modal">
             <i class="fas fa-user-plus pr-1"></i>
             Add collaborator
         </button>
@@ -60,12 +60,12 @@
             <div class="col-8 h-100">
                 <div class="row py-2">
                     <div class="col-7">
-                        <div class="ml-3 font-weight-bold text-muted" th:text="${session_name}"></div>
+                        <div class="font-weight-bold text-muted" th:text="${session_name}"></div>
                     </div>
                     <div class="col-4">
-                        <select id="language" class="form-control form-control-sm w-75 float-right">
+                        <select th:disabled="${is_creator == null}" id="language" class="form-control form-control-sm w-75 float-right">
                             <option selected value="java">Java</option>
-                            <option value="c++">C++</option>
+                            <option value="cpp">C++</option>
                             <option value="c">C</option>
                         </select>
                     </div>
@@ -88,7 +88,7 @@
                                 <div class="d-inline small pl-0">STDOUT:</div>
                             </div>
                             <div class="col">
-                                <button class="btn btn-sm btn-outline-secondary float-right">Clear</button>
+                                <button id="clear" class="btn btn-sm btn-outline-secondary float-right">Clear</button>
                             </div>
                         </div>
                         <!-- CODEMIRROR EDITOR-->
@@ -131,11 +131,9 @@
                 <div class="modal-body">
                     <div class="container-fluid">
                         <div class="row h-100 align-items-center">
-                            <div class="col-3 offset-1 text-center">
-                                <img class="w-100" src="/image/image_addcollaborator.png"/></div>
-                            <div class="col-7 ml-0 pl-0">
+                            <div class="col-8 offset-2">
                                 <div class="form-group input-group shadow-sm">
-                                    <input id="collaborator_email_address" type="email" class="form-control" placeholder="Enter collaborator's email" required>
+                                    <input id="collaborator_email_address" type="email" class="form-control" placeholder="Enter new collaborator's email" required>
                                 </div>
                             </div>
                         </div>

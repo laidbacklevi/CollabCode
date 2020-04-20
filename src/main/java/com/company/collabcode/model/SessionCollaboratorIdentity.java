@@ -33,4 +33,18 @@ public class SessionCollaboratorIdentity implements Serializable {
     public void setUserId(long userId) {
         this.userId = userId;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof SessionCollaboratorIdentity) {
+            SessionCollaboratorIdentity toCompareWith = (SessionCollaboratorIdentity) obj;
+            return toCompareWith.getSessionId() == this.sessionId && toCompareWith.userId == this.userId;
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (((this.sessionId % 1000000007) * (this.userId % 1000000007)) % 1000000007);
+    }
 }
