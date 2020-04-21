@@ -62,6 +62,22 @@ $("document").ready(function () {
 
     stompClient.connect({}, function (frame) {
         stompClient.subscribe(
+            "/session/" + session_id + "/live-collaborators",
+            function (output) {
+                $("#all_collaborators").empty();
+
+                var liveCollaborators = JSON.parse(output.body);
+                for(var i = 0; i < liveCollaborators.length; i++) {
+                    var liveCollaborator = liveCollaborators[i];
+                    $("#all_collaborators").append(
+                        '<button class="btn btn-sm btn-outline-dark pl-3 pr-3 ml-2">' +
+                        liveCollaborator.firstName + '</button>');
+                }
+
+            }
+        );
+
+        stompClient.subscribe(
             "/session/" + session_id + "/output",
             function (output) {
                 // Show output here

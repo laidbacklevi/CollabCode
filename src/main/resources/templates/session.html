@@ -47,7 +47,11 @@
 
 <body>
     <nav id="bottomBar" class="navbar fixed-bottom navbar-expand-sm navbar-light">
-        <div class="text-muted font-weight-bold">Online collaborators:</div>
+        <div class="text-muted font-weight-bold mr-2">Live collaborators:</div>
+
+        <div id="all_collaborators">
+
+        </div>
 
         <button th:disabled="${is_creator == null}" class="btn btn-sm btn-outline-dark ml-auto" data-toggle="modal" data-target="#add_collaborator_modal">
             <i class="fas fa-user-plus pr-1"></i>
