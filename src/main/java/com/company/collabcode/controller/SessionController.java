@@ -21,9 +21,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.HtmlUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Controller
 public class SessionController {
@@ -47,6 +45,43 @@ public class SessionController {
         this.sessionRepository = sessionRepository;
         this.sessionCollaboratorRepository = sessionCollaboratorRepository;
         this.databaseReference = databaseReference;
+    }
+
+    @GetMapping("/sessions")
+    private String showAllSessions(@AuthenticationPrincipal CustomUserDetails customUserDetails,
+                                   Model model) {
+
+        User currUser = customUserDetails.getUser();
+
+        // Get all created sessions
+        List<Session> createdSessions = sessionRepository.findByCreatorId(currUser.getId());
+
+        // Return empty list if no sessions found
+        if(createdSessions == null)
+            createdSessions = new LinkedList<>();
+
+        model.addAttribute("created_sessions", createdSessions);
+
+        // Get all sessions in which user is added as a collaborator
+        List<Session> collabSessions = getSessionsWithUserAsCollaboratorFromUserId(currUser.getId());
+        model.addAttribute("collab_sessions", collabSessions);
+
+        return "sessions";
+    }
+
+    private List<Session> getSessionsWithUserAsCollaboratorFromUserId(long userId) {
+        List<Session> result = new LinkedList<>();
+
+        List<SessionCollaborator> sessionCollaboratorsList = sessionCollaboratorRepository.findByUserId(userId);
+        if(sessionCollaboratorsList == null)
+            return result;
+
+        for(SessionCollaborator itr : sessionCollaboratorsList) {
+            long sessionId = itr.getSessionId();
+            Optional<Session> session = sessionRepository.findById(sessionId);
+            session.ifPresent(result::add);
+        }
+        return result;
     }
 
     @PostMapping("/session/new")

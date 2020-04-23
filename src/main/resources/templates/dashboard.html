@@ -2,8 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="_csrf" content="${_csrf.token}"/>
-    <meta name="_csrf_header" content="${_csrf.headerName}"/>
 
     <title>CollabCode</title>
 
@@ -93,8 +91,8 @@
                     <div class="card text-center shadow mt-5">
                         <div class="card-body">
                             <h5 class="card-title">View old sessions</h5>
-                            <p class="card-text text-secondary">View old sessions to continue them or to use their corresponding code.</p>
-                            <a href="#" class="btn btn-dark w-50">View</a>
+                            <p class="card-text text-secondary">View old sessions that you created or in which you were added as a collaborator.</p>
+                            <a href="/sessions" class="btn btn-dark w-50">View</a>
                         </div>
                     </div>
                 </div>
