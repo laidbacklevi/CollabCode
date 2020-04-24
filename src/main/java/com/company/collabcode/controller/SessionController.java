@@ -173,6 +173,34 @@ public class SessionController {
         return resultJSON;
     }
 
+    @PostMapping("/session/{session-id}/delete")
+    private String deleteSession(@PathVariable("session-id") long sessionId,
+                                   @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+
+        User currUser = customUserDetails.getUser();
+
+        sessionRepository.findById(sessionId).ifPresent(session -> {
+            if(currUser.getId() == session.getCreatorId()) {
+                databaseReference.child(String.valueOf(sessionId)).removeValueAsync();
+                sessionRepository.delete(session);
+            }
+        });
+
+        return "redirect:/sessions";
+    }
+
+
+    @PostMapping("/session/{session-id}/remove")
+    private String removeSelfFromCollaborator(@PathVariable("session-id") long sessionId,
+                                 @AuthenticationPrincipal CustomUserDetails customUserDetails) {
+
+        User currUser = customUserDetails.getUser();
+
+        sessionCollaboratorRepository.deleteById(new SessionCollaboratorIdentity(sessionId, currUser.getId()));
+
+        return "redirect:/sessions";
+    }
+
     @MessageMapping("/session/{id}/input")
     @SendTo("/session/{id}/output")
     public OutputContainer greeting(CodeContainer codeContainer) throws Exception {
