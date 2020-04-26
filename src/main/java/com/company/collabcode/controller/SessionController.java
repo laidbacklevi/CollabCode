@@ -168,7 +168,7 @@ public class SessionController {
                 SessionCollaborator addedCollaborator = new SessionCollaborator(currSession.getId(), newCollaborator.getId());
                 addedCollaborator = sessionCollaboratorRepository.save(addedCollaborator);
 
-                // Send notification to the added collaborator as well
+                // Send new notification to the added collaborator as well
                 Notification notification = new Notification();
                 notification.setText(currUser.getFirstName() + " invited you to collaborate on " + currSession.getName());
                 notification.setUrl("/session/" + currSession.getId());
