@@ -16,6 +16,10 @@ public class DashboardController {
 
         User currUser = customUserDetails.getUser();
         model.addAttribute("first_name", currUser.getFirstName());
+
+        // Send all pending notifications
+        // model.addAttribute("notifications", null);
+
         return "dashboard";
     }
 }

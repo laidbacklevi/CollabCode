@@ -62,18 +62,20 @@ public class SessionEventsListener {
 
         String sessionId = headers.getSessionId();
 
-        String destination = sessionIdToDestinationMap.get(sessionId);
-        sessionIdToDestinationMap.remove(sessionId);
+        if(sessionIdToDestinationMap.containsKey(sessionId)) {
+            String destination = sessionIdToDestinationMap.get(sessionId);
+            sessionIdToDestinationMap.remove(sessionId);
 
-        User user = userRepository.findByEmailAddress(headers.getUser().getName());
+            User user = userRepository.findByEmailAddress(headers.getUser().getName());
 
-        LiveCollaborator collaboratorLeaving = new LiveCollaborator(user);
+            LiveCollaborator collaboratorLeaving = new LiveCollaborator(user);
 
-        List<LiveCollaborator> collaborators = liveCollaborators.get(destination);
-        collaborators.remove(collaboratorLeaving);
+            List<LiveCollaborator> collaborators = liveCollaborators.get(destination);
+            collaborators.remove(collaboratorLeaving);
 
-        liveCollaborators.put(destination, collaborators);
+            liveCollaborators.put(destination, collaborators);
 
-        template.convertAndSend(destination, collaborators);
+            template.convertAndSend(destination, collaborators);
+        }
     }
 }

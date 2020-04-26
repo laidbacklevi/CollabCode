@@ -1,7 +1,36 @@
 $("document").ready(function () {
+    hideBadge();
+
+    $('#navbarDropdownNotifications').click(function () {
+        hideBadge();
+    });
+
+    function hideBadge() {
+        $('#new_badge').hide();
+    }
+
     $("#change_password").click(function () {
         requestPasswordChange($("#old_password").val(), $("#new_password").val());
     });
+
+    var socket = new SockJS("/user-endpoint");
+    var stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function (frame) {
+        stompClient.subscribe(
+            "/user/queue/new-notification",
+            function (result) {
+                var notification = JSON.parse(result.body);
+
+                var toAdd = '<a class="dropdown-item" href="' + notification.url + '">' +
+                    notification.text + '</a><div class="dropdown-divider"></div>';
+
+                $("#notifications").prepend(toAdd);
+                $('#new_badge').show();
+            }
+        );
+    });
+
 });
 
 function requestPasswordChange(old_password, new_password) {

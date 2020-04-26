@@ -21,7 +21,9 @@ $("document").ready(function () {
 
 
     // Input
-    var codemirrorInput = CodeMirror.fromTextArea(document.getElementById("input"));
+    var codemirrorInput = CodeMirror.fromTextArea(document.getElementById("input"), {
+        mode : "text/plain"
+    });
     codemirrorInput.setSize(null, "calc(100% - 42px)");
     var firepadInputRef = firebase.database().ref().child(session_id).child("input");
     var firepadInput = Firepad.fromCodeMirror(firepadInputRef, codemirrorInput, {});
@@ -52,6 +54,7 @@ $("document").ready(function () {
 
     // Output
     var codemirrorOutput = CodeMirror.fromTextArea(document.getElementById("output"), {
+        mode: "text/plain",
         readOnly: true
     });
     codemirrorOutput.setSize(null, "calc(100% - 47px)");
@@ -82,9 +85,12 @@ $("document").ready(function () {
             function (output) {
                 // Show output here
                 var outputContainer = JSON.parse(output.body);
-                // Code ran successfully
-                if(outputContainer.output != null)
-                    codemirrorOutput.replaceRange(outputContainer.output, {line: Infinity});
+                var result = "#" + outputContainer.sourceUserFirstName + " ran code...\n\n";
+                if(outputContainer.output != null) {
+                    result += outputContainer.output;
+                }
+                result += "\n\n\n";
+                codemirrorOutput.replaceRange(result, {line: Infinity});
                 codemirrorOutput.setCursor(codemirrorOutput.lineCount(), 0);
             }
         );
@@ -98,6 +104,7 @@ $("document").ready(function () {
             {},
             JSON.stringify(
                 {
+                    'sourceUserFirstName' : first_Name,
                     'code' : codemirrorEditor.getValue(),
                     'stdin': codemirrorInput.getValue(),
                     'language': $("#language option:selected").val()
@@ -106,7 +113,7 @@ $("document").ready(function () {
         );
     }
 
-    $("#run").click(function() { compileAndRun(); });
+    $("#run").click(function() {compileAndRun(); });
 
     $("#add_collaborator").click(function () {
         addCollaborator($("#collaborator_email_address").val());

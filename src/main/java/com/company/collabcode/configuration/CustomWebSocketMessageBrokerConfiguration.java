@@ -12,12 +12,12 @@ public class CustomWebSocketMessageBrokerConfiguration implements WebSocketMessa
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/session");
+        config.enableSimpleBroker("/session", "/queue");
         config.setApplicationDestinationPrefixes("/app");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/session-endpoint").withSockJS();
+        registry.addEndpoint("/user-endpoint", "/session-endpoint").withSockJS();
     }
 }

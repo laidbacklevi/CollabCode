@@ -1,16 +1,26 @@
 package com.company.collabcode.model;
 
 public class CodeContainer {
+    private String sourceUserFirstName;
     private String code;
     private String stdin;
     private String language;
 
     public CodeContainer() {}
 
-    public CodeContainer(String code, String stdin, String language) {
+    public CodeContainer(String sourceUserFirstName, String code, String stdin, String language) {
+        this.sourceUserFirstName = sourceUserFirstName;
         this.code = code;
         this.stdin = stdin;
         this.language = language;
+    }
+
+    public String getSourceUserFirstName() {
+        return sourceUserFirstName;
+    }
+
+    public void setSourceUserFirstName(String sourceUserFirstName) {
+        this.sourceUserFirstName = sourceUserFirstName;
     }
 
     public String getCode() {

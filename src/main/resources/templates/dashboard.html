@@ -14,6 +14,12 @@
     <!-- Fontawesome icons -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
+    <!-- SockJS -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.min.js"></script>
+
+    <!-- STOMP -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+
     <link rel="stylesheet" href="/css/dashboard.css">
     <script src="/js/dashboard.js"></script>
 </head>
@@ -31,18 +37,14 @@
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item dropdown mr-4">
                     <a class="nav-link dropdown-toggle font-weight-bold" href="#" id="navbarDropdownNotifications" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="badge badge-pill badge-primary align-middle mr-1 pt-1 pb-2 pl-3 pr-3 mb-1">new</span>
+                        <span id="new_badge" class="badge badge-pill badge-primary align-middle mr-1 pt-1 pb-2 pl-3 pr-3 mb-1">new</span>
                         <i class="fas fa-envelope mr-1"></i>
                         Invites
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownNotifications">
-                        <a class="dropdown-item" href="#">
-                            Notification 1
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">
-                            Notification 2
-                        </a>
+                    <div id="notifications" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownNotifications">
+                        <div class="dropdown-item">
+                            No more invites
+                        </div>
                     </div>
                 </li>
 

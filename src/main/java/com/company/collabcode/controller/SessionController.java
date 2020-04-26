@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,16 +35,20 @@ public class SessionController {
     private final SessionRepository sessionRepository;
     private final SessionCollaboratorRepository sessionCollaboratorRepository;
 
+    private final SimpMessagingTemplate template;
+
     private final DatabaseReference databaseReference;
 
     public SessionController(final UserRepository userRepository,
                              final SessionRepository sessionRepository,
                              final SessionCollaboratorRepository sessionCollaboratorRepository,
+                             final SimpMessagingTemplate template,
                              final DatabaseReference databaseReference) {
 
         this.userRepository = userRepository;
         this.sessionRepository = sessionRepository;
         this.sessionCollaboratorRepository = sessionCollaboratorRepository;
+        this.template = template;
         this.databaseReference = databaseReference;
     }
 
@@ -128,6 +133,7 @@ public class SessionController {
             }
         }
 
+        model.addAttribute("first_name", currUser.getFirstName());
         model.addAttribute("session_id", requestedSession.getId());
         model.addAttribute("session_name", requestedSession.getName());
 
@@ -159,8 +165,14 @@ public class SessionController {
             result.put("message", "failure");
         } else {
             if(currSession.getCreatorId() != newCollaborator.getId()) {
-                SessionCollaborator newSessionCollaborator = new SessionCollaborator(currSession.getId(), newCollaborator.getId());
-                sessionCollaboratorRepository.save(newSessionCollaborator);
+                SessionCollaborator addedCollaborator = new SessionCollaborator(currSession.getId(), newCollaborator.getId());
+                addedCollaborator = sessionCollaboratorRepository.save(addedCollaborator);
+
+                // Send notification to the added collaborator as well
+                Notification notification = new Notification();
+                notification.setText(currUser.getFirstName() + " invited you to collaborate on " + currSession.getName());
+                notification.setUrl("/session/" + currSession.getId());
+                template.convertAndSendToUser(newCollaborator.getEmailAddress(), "/queue/new-notification", notification);
             }
             result.put("message", "success");
         }
@@ -225,6 +237,7 @@ public class SessionController {
                 httpEntity,
                 OutputContainer.class
         );
+        outputContainer.setSourceUserFirstName(codeContainer.getSourceUserFirstName());
 
         return outputContainer;
     }
