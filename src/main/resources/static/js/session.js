@@ -13,7 +13,13 @@ $("document").ready(function () {
         mode: "text/x-java",
         indentWithTabs: true,
         lineNumbers: true,
-        styleActiveLine: true
+        styleActiveLine: true,
+        smartIndent: true,
+        lineWrapping: true,
+        matchBrackets : true,
+        indentUnit: 4,
+        autoCloseBrackets: true,
+        autofocus: true
     });
     codemirrorEditor.setSize(null, "calc(100% - 49px)");
     var firepadCodeRef = firebase.database().ref().child(session_id).child("code");
