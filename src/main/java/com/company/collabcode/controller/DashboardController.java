@@ -48,7 +48,7 @@ public class DashboardController {
             Session session = sessionRepository.findById(sessionCollaborator.getSessionId()).get();
             User creator = userRepository.findById(session.getCreatorId()).get();
             Notification notification = new Notification();
-            notification.setText(creator.getFirstName() + " invited you to collaborate on " + session.getName());
+            notification.setText("<b>" + creator.getFirstName() + "</b> invited you to collaborate on <b>" + session.getName() + "</b>");
             notification.setUrl("/session/" + session.getId());
             notifications.add(notification);
         });

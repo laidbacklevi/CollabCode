@@ -170,7 +170,7 @@ public class SessionController {
 
                 // Send new notification to the added collaborator as well
                 Notification notification = new Notification();
-                notification.setText(currUser.getFirstName() + " invited you to collaborate on " + currSession.getName());
+                notification.setText("<b>" + currUser.getFirstName() + "</b> invited you to collaborate on <b>" + currSession.getName() + "</b>");
                 notification.setUrl("/session/" + currSession.getId());
                 template.convertAndSendToUser(newCollaborator.getEmailAddress(), "/queue/new-notification", notification);
             }

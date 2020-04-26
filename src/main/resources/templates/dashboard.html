@@ -41,9 +41,9 @@
                         <i class="fas fa-envelope mr-1"></i>
                         Invites
                     </a>
-                    <div id="notifications" class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownNotifications">
+                    <div id="notifications" style="height: auto; max-height: 250px;" class="dropdown-menu dropdown-menu-right overflow-auto" aria-labelledby="navbarDropdownNotifications">
                         <div th:each="notification : ${notifications}">
-                            <a class="dropdown-item" th:href="@{$(notification.url)}" th:text="${notification.text}"></a>
+                            <a class="dropdown-item" th:href="@{$(notification.url)}" th:utext="${notification.text}"></a>
                             <div class="dropdown-divider"></div>
                         </div>
                         <div class="dropdown-item">
